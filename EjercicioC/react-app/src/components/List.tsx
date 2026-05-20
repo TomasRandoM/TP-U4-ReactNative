@@ -2,16 +2,21 @@ import { useState } from "react";
 
 type Props = {
   data: string[];
+  onSelect?: (elemento: String) => void;
 };
 
-function List({ data }: Props) {
+function List({ data, onSelect }: Props) {
   const [index, setIndex] = useState(0); //hook
-  const handleClick = (e: number) => setIndex(e);
+
+  const handleClick = (i: number, element: String) => {
+    setIndex(i);
+    onSelect?.(element);
+  };
   return (
     <ul className="list-group">
       {data.map((element, i) => (
         <li
-          onClick={() => handleClick(i)}
+          onClick={() => handleClick(i, element)}
           key={element}
           className={`list-group-item ${index == i ? "active" : ""}`}
         >
